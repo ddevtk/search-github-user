@@ -26,12 +26,12 @@ const Column3D = ({ data }) => {
       // Chart Configuration
       chart: {
         caption: 'Most Popular',
-        theme: 'candy',
+        theme: 'fusion',
         yAxisName: 'Stars',
         xAxisName: 'Repos',
         xAxisNameFontSize: '16px',
         yAxisNameFontSize: '16px',
-
+        baseFontSize: '12px',
       },
       // Chart Data
       data,

@@ -26,11 +26,12 @@ const Bar3D = ({ data }) => {
       // Chart Configuration
       chart: {
         caption: 'Most Forked',
-        theme: 'candy',
+        theme: 'fusion',
         yAxisName: 'Repos',
         xAxisName: 'Forked',
         xAxisNameFontSize: '16px',
         yAxisNameFontSize: '16px',
+        baseFontSize: '16px'
       },
       // Chart Data
       data,
