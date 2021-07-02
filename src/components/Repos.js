@@ -21,21 +21,44 @@ const Repos = () => {
       return acc;
     }
   }, {});
-  console.log(languages);
 
   const mostLang = Object.values(languages).sort((a, b) => b.value - a.value);
+
   const starsPerLang = Object.values(languages)
     .sort((a, b) => b.stars - a.stars)
     .map(item => {
       return { ...item, value: item.stars };
     });
+
+  const starAndForkPerRepo = repos.reduce((acc, cur) => {
+    const { name, stargazers_count, forks_count } = cur;
+    acc.push({
+      starPerRepo: { label: name, value: stargazers_count },
+      forkPerRepo: { label: name, value: forks_count },
+    });
+    return acc;
+  }, []);
+
+  const starsPerRepo = starAndForkPerRepo
+    .map(row => {
+      return row.starPerRepo;
+    })
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+  const forkPerRepo = starAndForkPerRepo
+    .map(row => {
+      return row.forkPerRepo;
+    })
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+
   return (
     <section className='section'>
       <Wrapper className='section-center'>
         <Pie3D data={mostLang} />
-        <div></div>
+        <Column3D data={starsPerRepo} />
         <Doughnut3D data={starsPerLang} />
-        <div></div>
+        <Bar3D data={forkPerRepo} />
       </Wrapper>
     </section>
   );

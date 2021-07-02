@@ -14,14 +14,14 @@ const GithubProvider = ({ children }) => {
   const [followers, setFollowers] = useState([]);
 
   const getData = async () => {
-    const userRes = await fetch('https://api.github.com/users/ddevtk');
+    const userRes = await fetch('https://api.github.com/users/bradtraversy');
     const userData = await userRes.json();
     const repoRes = await fetch(
-      'https://api.github.com/users/ddevtk/repos?per_page=100'
+      'https://api.github.com/users/bradtraversy/repos?per_page=100'
     );
     const repoData = await repoRes.json();
     const followerRes = await fetch(
-      'https://api.github.com/users/ddevtk/followers'
+      'https://api.github.com/users/bradtraversy/followers'
     );
     const followerData = await followerRes.json();
     setUser(userData);
