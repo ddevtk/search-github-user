@@ -18,17 +18,18 @@ ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
 // STEP 4 - Creating the DOM element to pass the react-fusioncharts component
 const Chart = ({ data }) => {
   const chartConfigs = {
-    type: 'pie3d', // The chart type
+    type: 'doughnut3d', // The chart type
     width: '100%', // Width of the chart
     height: '400', // Height of the chart
     dataFormat: 'json', // Data type
     dataSource: {
       // Chart Configuration
       chart: {
-        caption: 'Languages',
+        caption: 'Stars per language',
         theme: 'fusion',
-        decimals: 1,
-        pieRadius: '50%',
+        decimals: 0,
+        doughnutRadius: '45%',
+        showPercentValues: 0,
       },
       // Chart Data
       data,
