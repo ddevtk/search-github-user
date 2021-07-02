@@ -10,7 +10,9 @@ import { BrowserRouter } from 'react-router-dom';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <GithubProvider>
+        <App />
+      </GithubProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,9 +1,37 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { GithubContext } from '../context/context';
 import styled from 'styled-components';
-import { MdBusiness, MdLocationOn, MdLink } from 'react-icons/md';
+import { AiFillFacebook } from 'react-icons/ai';
+import { MdLocationOn } from 'react-icons/md';
 const Card = () => {
-  return <h2>card component</h2>;
+  const { user } = useContext(GithubContext);
+  const { avatar_url, html_url, name, login, location } = user;
+  return (
+    <Wrapper>
+      <header>
+        <img src={avatar_url} alt={name} />
+        <div>
+          <h4> {name} </h4>
+          <p>@{login}</p>
+        </div>
+        <a href={html_url}>Follow</a>
+      </header>
+      <div className='links'>
+        <p>
+          <MdLocationOn />
+          {location}
+        </p>
+        <a
+          href='http://www.facebook.com/duongbui234'
+          target='_blank'
+          rel='noreferrer'
+        >
+          <AiFillFacebook />
+          Facebook
+        </a>
+      </div>
+    </Wrapper>
+  );
 };
 const Wrapper = styled.article`
   background: var(--clr-white);
@@ -13,7 +41,7 @@ const Wrapper = styled.article`
   border-bottom-right-radius: var(--radius);
   position: relative;
   &::before {
-    content: 'user';
+    content: 'User';
     position: absolute;
     top: 0;
     left: 0;
