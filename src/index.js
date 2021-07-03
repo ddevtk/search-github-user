@@ -9,11 +9,18 @@ import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Auth0Provider
+      domain='dev-0fiho75q.jp.auth0.com'
+      clientId='mBkvYBAuBvcRBy4LkOdH3J5kkOTKDQDB'
+      redirectUri={window.location.origin}
+      cacheLocation='localstorage'
+    >
       <GithubProvider>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </GithubProvider>
-    </BrowserRouter>
+    </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

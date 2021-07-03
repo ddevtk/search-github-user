@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { mockUser } from './mockData.js/mockUser';
-import { mockRepos } from './mockData.js/mockRepos';
-import { mockFollowers } from './mockData.js/mockFollowers';
 import axios from 'axios';
 
 const rootUrl = 'https://api.github.com';
@@ -14,18 +11,23 @@ const GithubProvider = ({ children }) => {
   const [followers, setFollowers] = useState([]);
   const [requests, setRequests] = useState(60);
   const [error, setError] = useState({ isShow: false, msg: '' });
+  const [isLoading, setIsLoading] = useState(false);
 
   const searchUser = async user => {
     try {
+      setIsLoading(true);
       const res = await fetch(`${rootUrl}/users/${user}`);
       const userData = await res.json();
       if (userData.message) {
+        setIsLoading(false);
         throw new Error('There is no user with that input');
       }
       const reposData = await axios(
         `${rootUrl}/users/${user}/repos?per_page=100`
       );
       const followersData = await axios(`${rootUrl}/users/${user}/followers`);
+
+      setIsLoading(false);
 
       setUser(userData || {});
       setRepos(reposData.data || []);
@@ -37,6 +39,7 @@ const GithubProvider = ({ children }) => {
   };
 
   const getData = async () => {
+    setIsLoading(true);
     const userRes = await fetch('https://api.github.com/users/ddevtk');
     const userData = await userRes.json();
     const repoRes = await fetch(
@@ -47,6 +50,8 @@ const GithubProvider = ({ children }) => {
       'https://api.github.com/users/ddevtk/followers'
     );
     const followerData = await followerRes.json();
+
+    setIsLoading(false);
 
     setUser(userData);
     setRepos(repoData);
@@ -81,7 +86,16 @@ const GithubProvider = ({ children }) => {
 
   return (
     <GithubContext.Provider
-      value={{ user, repos, followers, requests, error, setError, searchUser }}
+      value={{
+        user,
+        repos,
+        followers,
+        requests,
+        error,
+        setError,
+        searchUser,
+        isLoading,
+      }}
     >
       {children}
     </GithubContext.Provider>

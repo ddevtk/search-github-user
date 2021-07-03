@@ -2,8 +2,14 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { GithubContext } from '../context/context';
 import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut3D } from './Charts';
+
+import { useAuth0 } from '@auth0/auth0-react';
+
 const Repos = () => {
   const { repos } = useContext(GithubContext);
+
+  const { isAuthenticated, user } = useAuth0();
+  console.log(user, isAuthenticated);
 
   const languages = repos.reduce((acc, cur) => {
     const { language, stargazers_count } = cur;

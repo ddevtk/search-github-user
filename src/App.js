@@ -3,14 +3,15 @@ import { Dashboard, Login, PrivateRoute, AuthWrapper, Error } from './pages';
 import { Switch, Route } from 'react-router-dom';
 
 function App() {
+  console.log('first');
   return (
     <Switch>
-      <Route exact path='/'>
-        <Dashboard></Dashboard>
+      <Route exact={true} path='/'>
+        <Dashboard />
       </Route>
-      <Route path='/login'>
+      {/* <Route path='/login'>
         <Login />
-      </Route>
+      </Route> */}
       <Route path='*'>
         <Error />
       </Route>
