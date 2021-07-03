@@ -1,7 +1,46 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { MdSearch } from 'react-icons/md';
 import { GithubContext } from '../context/context';
+
+const Search = () => {
+  const { requests, error, setError, searchUser } = useContext(GithubContext);
+
+  const [user, setUser] = useState();
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!user) {
+      setError({ isShow: true, msg: 'Please enter input user' });
+      return;
+    }
+    searchUser(user);
+  };
+
+  return (
+    <section className='section'>
+      <Wrapper className='section-center'>
+        {error.isShow && <p className='error-paragraph'>{error.msg}</p>}
+
+        <form onSubmit={e => handleSubmit(e)}>
+          <div className='form-control'>
+            <MdSearch />
+            <input
+              type='text'
+              placeholder='Enter github user'
+              value={user}
+              onChange={e => setUser(e.target.value)}
+            />
+            <button type='submit'>Search</button>
+          </div>
+        </form>
+        <h3>Request: {requests} / 60</h3>
+      </Wrapper>
+    </section>
+  );
+};
+
+export default Search;
 
 const Wrapper = styled.div`
   position: relative;
@@ -84,25 +123,3 @@ const ErrorWrapper = styled.article`
     letter-spacing: var(--spacing);
   }
 `;
-
-const Search = () => {
-  const { requests, error } = useContext(GithubContext);
-  return (
-    <section className='section'>
-      <Wrapper className='section-center'>
-        {error.isShow && <p>{error.msg}</p>}
-
-        <form>
-          <div className='form-control'>
-            <MdSearch />
-            <input type='text' placeholder='Enter github user' />
-            <button type='submit'>Search</button>
-          </div>
-        </form>
-        <h3>Request: {requests} / 60</h3>
-      </Wrapper>
-    </section>
-  );
-};
-
-export default Search;

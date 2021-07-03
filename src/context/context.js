@@ -15,17 +15,39 @@ const GithubProvider = ({ children }) => {
   const [requests, setRequests] = useState(60);
   const [error, setError] = useState({ isShow: false, msg: '' });
 
+  const searchUser = async user => {
+    try {
+      const res = await fetch(`${rootUrl}/users/${user}`);
+      const userData = await res.json();
+      if (userData.message) {
+        throw new Error('There is no user with that input');
+      }
+      const reposData = await axios(
+        `${rootUrl}/users/${user}/repos?per_page=100`
+      );
+      const followersData = await axios(`${rootUrl}/users/${user}/followers`);
+
+      setUser(userData || {});
+      setRepos(reposData.data || []);
+      setFollowers(followersData.data || []);
+    } catch (error) {
+      console.log(error.message);
+      setError({ isShow: true, msg: 'There is no user with that input' });
+    }
+  };
+
   const getData = async () => {
-    const userRes = await fetch('https://api.github.com/users/bradtraversy');
+    const userRes = await fetch('https://api.github.com/users/ddevtk');
     const userData = await userRes.json();
     const repoRes = await fetch(
-      'https://api.github.com/users/bradtraversy/repos?per_page=100'
+      'https://api.github.com/users/ddevtk/repos?per_page=100'
     );
     const repoData = await repoRes.json();
     const followerRes = await fetch(
-      'https://api.github.com/users/bradtraversy/followers'
+      'https://api.github.com/users/ddevtk/followers'
     );
     const followerData = await followerRes.json();
+
     setUser(userData);
     setRepos(repoData);
     setFollowers(followerData);
@@ -37,7 +59,6 @@ const GithubProvider = ({ children }) => {
       let {
         rate: { remaining },
       } = data;
-      remaining = 0;
       setRequests(remaining);
       if (remaining === 0) {
         setError({
@@ -54,9 +75,14 @@ const GithubProvider = ({ children }) => {
     getData();
     checkRequest();
   }, []);
+  useEffect(() => {
+    checkRequest();
+  }, [user]);
 
   return (
-    <GithubContext.Provider value={{ user, repos, followers, requests, error }}>
+    <GithubContext.Provider
+      value={{ user, repos, followers, requests, error, setError, searchUser }}
+    >
       {children}
     </GithubContext.Provider>
   );

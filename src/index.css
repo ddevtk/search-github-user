@@ -1,12 +1,12 @@
 /*
-=============== 
+===============
 Fonts
 ===============
 */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap');
 
 /*
-=============== 
+===============
 Variables
 ===============
 */
@@ -54,7 +54,7 @@ Variables
   --fixed-width: 620px;
 }
 /*
-=============== 
+===============
 Global Styles
 ===============
 */
@@ -180,4 +180,17 @@ p {
 }
 main {
   padding-bottom: 2rem;
+}
+
+.error-article {
+  position: absolute;
+  width: 90vw;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+  text-transform: capitalize;
+}
+.error-paragraph {
+  color: red;
+  letter-spacing: var(--spacing);
 }

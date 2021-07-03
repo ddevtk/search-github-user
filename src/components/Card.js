@@ -21,14 +21,16 @@ const Card = () => {
           <MdLocationOn />
           {location}
         </p>
-        <a
-          href='http://www.facebook.com/duongbui234'
-          target='_blank'
-          rel='noreferrer'
-        >
-          <AiFillFacebook />
-          Facebook
-        </a>
+        {login === 'ddevtk' && (
+          <a
+            href='http://www.facebook.com/duongbui234'
+            target='_blank'
+            rel='noreferrer'
+          >
+            <AiFillFacebook />
+            Facebook
+          </a>
+        )}
       </div>
     </Wrapper>
   );
